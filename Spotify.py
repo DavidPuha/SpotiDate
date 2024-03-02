@@ -6,8 +6,6 @@ from spotipy.oauth2 import SpotifyOAuth
 
 load_dotenv()
 
-# TODO: line 28 only gets up to 50 playlists, if you have more, program breaks :(. add While True to fix it!
-
 def main():
     client_ID = os.environ.get("SPOTIFY_CLIENT_ID")
     client_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
@@ -25,8 +23,14 @@ def main():
     userID = API.current_user().get("id") # currently logged in userID
     playlists = [] # ARR with all playlists
 
-    for data in API.user_playlists(userID).get("items"): # GET all the playlists available for the user and filter them
-        playlists.append({"name": data["name"], "id": data["id"]})
+    offset = 0
+    while True:
+        data = API.user_playlists(userID, offset=offset).get("items") # GET all the playlists available for the user and filter them
+        if len(data) == 0:
+            break
+        for res in data: 
+            playlists.append({"name": res["name"], "id": res["id"]})
+        offset += 50
 
     print("-------------------------------------------")
     print("COPY from Playlist:")
