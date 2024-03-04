@@ -35,7 +35,7 @@ def main():
     print("-------------------------------------------")
     print("COPY from Playlist:")
     for i, item in enumerate(playlists):
-        print(f"{i}) {item["name"]}")
+        print(f"{i}) {item.get('name')}")
     
     user_input = ""
     while user_input not in map(str, range(0, len(playlists))):
@@ -48,7 +48,7 @@ def main():
     print("-------------------------------------------")
     print("COPY to Playlist:")
     for i, item in enumerate(playlists):
-        print(f"{i}) {item["name"]}")
+        print(f"{i}) {item.get('name')}")
     
     user_input = ""
     while user_input not in map(str, range(0, len(playlists))):
